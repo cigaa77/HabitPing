@@ -11,9 +11,9 @@ class MyHabitsViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var emptyStateView: UIView!
-    
+
     private let viewModel = MyHabitViewModel()
-    
+
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -40,7 +40,14 @@ class MyHabitsViewController: UIViewController {
     }
 
     @objc func addButtonTapped() {
-        print("Add habit tapped")
+
+        guard
+            let navigationController = storyboard?.instantiateViewController(
+                identifier: "AddHabitViewController"
+            ) as? UINavigationController
+        else { return }
+
+        present(navigationController, animated: true)
     }
 
 }
@@ -76,6 +83,5 @@ extension MyHabitsViewController: UITableViewDataSource {
         return cell
 
     }
-    
-    
+
 }
