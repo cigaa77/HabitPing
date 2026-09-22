@@ -11,6 +11,14 @@ class MyHabitsViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var emptyStateView: UIView!
+    
+    private let viewModel = MyHabitViewModel()
+    
+    private let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +50,7 @@ extension MyHabitsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
         -> Int
     {
-        return 3
+        return viewModel.numberOfHabits
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
@@ -55,12 +63,19 @@ extension MyHabitsViewController: UITableViewDataSource {
             ) as? HabitTableViewCell
         else { return UITableViewCell() }
 
-        cell.emojiLabel.text = "🐶"
-        cell.nameLabel.text = "Feed the dog"
+        let habit = viewModel.habit(at: indexPath.row)
+        cell.emojiLabel.text = habit.emoji
+        cell.nameLabel.text = habit.name
         cell.detailLabel.text = "Every morning"
-        cell.notificationImageView.image = UIImage(systemName: "bell.fill")
+        cell.notificationImageView.image = UIImage(
+            systemName: habit.notificationsEnabled ? "bell.fill" : "bell.slash"
+        )
+        cell.detailLabel.text =
+            "Every day • \(timeFormatter.string(from: habit.reminderTime))"
 
         return cell
 
     }
+    
+    
 }
