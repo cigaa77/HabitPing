@@ -25,6 +25,10 @@ final class MyHabitViewModel {
 
     func addHabit(habit: Habit) {
         habits.append(habit)
+
+        if habit.notificationsEnabled {
+            NotificationManager.shared.scheduleNotification(for: habit)
+        }
     }
 
     func requestNotificationPermission(completion: @escaping (Bool) -> Void) {

@@ -30,4 +30,35 @@ final class NotificationManager {
             completion(granted)
         }
     }
+
+    func scheduleNotification(for habit: Habit) {
+        let content = UNMutableNotificationContent()
+        content.title = "Habit Ping"
+        content.body = "Time for \(habit.name) \(habit.emoji)"
+        content.sound = .default
+
+        let dateComponents = Calendar.current.dateComponents(
+            [.hour, .minute],
+            from: habit.reminderTime
+        )
+
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents,
+            repeats: true
+        )
+
+        let request = UNNotificationRequest(
+            identifier: habit.id.uuidString,
+            content: content,
+            trigger: trigger
+        )
+
+        notificationCenter.add(request) { error in
+            if let error {
+                print("Failed to add notification: \(error)")
+            } else {
+                print("Notification added successfully. \(habit.name)")
+            }
+        }
+    }
 }
