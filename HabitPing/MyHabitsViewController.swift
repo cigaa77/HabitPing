@@ -35,8 +35,7 @@ class MyHabitsViewController: UIViewController {
         )
 
         tableView.dataSource = self
-
-        emptyStateView.isHidden = true
+        updateEmptyState()
     }
 
     @objc func addButtonTapped() {
@@ -44,10 +43,21 @@ class MyHabitsViewController: UIViewController {
         guard
             let navigationController = storyboard?.instantiateViewController(
                 identifier: "AddHabitViewController"
-            ) as? UINavigationController
+            ) as? UINavigationController,
+
+            let addHabitViewController = navigationController.topViewController
+                as? AddHabitViewController
         else { return }
 
+        addHabitViewController.delegate = self
+
         present(navigationController, animated: true)
+    }
+
+    private func updateEmptyState() {
+        let isEmpty = viewModel.numberOfHabits == 0
+        emptyStateView.isHidden = !isEmpty
+        tableView.isHidden = isEmpty
     }
 
 }
@@ -84,4 +94,16 @@ extension MyHabitsViewController: UITableViewDataSource {
 
     }
 
+}
+
+extension MyHabitsViewController: AddHabitViewControllerDelegate {
+
+    func addHabitViewController(
+        _ controller: AddHabitViewController,
+        didCreate habit: Habit
+    ) {
+        viewModel.addHabit(habit: habit)
+        tableView.reloadData()
+        updateEmptyState()
+    }
 }

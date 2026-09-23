@@ -7,13 +7,22 @@
 
 import UIKit
 
+protocol AddHabitViewControllerDelegate: AnyObject {
+    func addHabitViewController(
+        _ controller: AddHabitViewController,
+        didCreate habit: Habit
+    )
+}
+
 final class AddHabitViewController: UIViewController {
-    
+
     @IBOutlet private weak var nameTextField: UITextField!
     @IBOutlet private weak var emojiTextField: UITextField!
     @IBOutlet private weak var reminderDatePicker: UIDatePicker!
     @IBOutlet private weak var notificationsSwitch: UISwitch!
-    
+
+    weak var delegate: AddHabitViewControllerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,6 +46,23 @@ final class AddHabitViewController: UIViewController {
     }
 
     @objc func saveButtonTapped() {
-        print("Saved")
+        guard let name = nameTextField.text,
+            !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            return
+        }
+        let emoji =
+            emojiTextField.text?.isEmpty == false ? emojiTextField.text! : "✨"
+
+        let habit = Habit(
+            name: name,
+            emoji: emoji,
+            reminderTime: reminderDatePicker.date,
+            notificationsEnabled: notificationsSwitch.isOn
+        )
+
+        delegate?.addHabitViewController(self, didCreate: habit)
+
+        dismiss(animated: true)
     }
 }

@@ -17,48 +17,52 @@ final class MyHabitViewModel {
     func habit(at index: Int) -> Habit {
         habits[index]
     }
-    
-    init(){
-        
-            createSampleHabits()
+
+    init() {
+
+        createSampleHabits()
     }
-    
+
+    func addHabit(habit: Habit) {
+        habits.append(habit)
+    }
+
     private func createSampleHabits() {
-            let calendar = Calendar.current
+        let calendar = Calendar.current
 
-            let morning = calendar.date(
-                bySettingHour: 8,
-                minute: 0,
-                second: 0,
-                of: Date()
-            )!
+        let morning = calendar.date(
+            bySettingHour: 8,
+            minute: 0,
+            second: 0,
+            of: Date()
+        )!
 
-            let evening = calendar.date(
-                bySettingHour: 19,
-                minute: 0,
-                second: 0,
-                of: Date()
-            )!
+        let evening = calendar.date(
+            bySettingHour: 19,
+            minute: 0,
+            second: 0,
+            of: Date()
+        )!
 
-            habits = [
-                Habit(
-                    name: "Feed the dog",
-                    emoji: "🐶",
-                    reminderTime: morning,
-                    notificationsEnabled: true
-                ),
-                Habit(
-                    name: "Study German",
-                    emoji: "📚",
-                    reminderTime: evening,
-                    notificationsEnabled: true
-                ),
-                Habit(
-                    name: "Workout",
-                    emoji: "🏋️",
-                    reminderTime: evening,
-                    notificationsEnabled: false
-                )
-            ]
-        }
+        habits = [
+            Habit(
+                name: "Feed the dog",
+                emoji: "🐶",
+                reminderTime: morning,
+                notificationsEnabled: true
+            ),
+            Habit(
+                name: "Study German",
+                emoji: "📚",
+                reminderTime: evening,
+                notificationsEnabled: true
+            ),
+            Habit(
+                name: "Workout",
+                emoji: "🏋️",
+                reminderTime: evening,
+                notificationsEnabled: false
+            ),
+        ]
+    }
 }
