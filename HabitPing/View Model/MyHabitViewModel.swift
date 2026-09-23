@@ -27,6 +27,12 @@ final class MyHabitViewModel {
         habits.append(habit)
     }
 
+    func requestNotificationPermission(completion: @escaping (Bool) -> Void) {
+        NotificationManager.shared.requestAuthorization { granted in
+            completion(granted)
+        }
+    }
+
     private func createSampleHabits() {
         let calendar = Calendar.current
 

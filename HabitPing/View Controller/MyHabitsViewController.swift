@@ -36,6 +36,10 @@ class MyHabitsViewController: UIViewController {
 
         tableView.dataSource = self
         updateEmptyState()
+
+        viewModel.requestNotificationPermission { granted in
+            print("Notification permission granted: \(granted)")
+        }
     }
 
     @objc func addButtonTapped() {
