@@ -7,13 +7,26 @@
 
 import UserNotifications
 
-final class NotificationManager {
+protocol NotificationManagerDelegate: AnyObject {
+    func notificationManager(
+        _ manager: NotificationManager,
+        didReceivedWithID habitID: String
+    )
+}
+
+final class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
 
     private let notificationCenter = UNUserNotificationCenter.current()
 
     static let shared = NotificationManager()
 
-    private init() {}
+    weak var delegate: NotificationManagerDelegate?
+
+    private override init() {
+        super.init()
+
+        notificationCenter.delegate = self
+    }
 
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
         notificationCenter.requestAuthorization(options: [
@@ -36,6 +49,7 @@ final class NotificationManager {
         content.title = "Habit Ping"
         content.body = "Time for \(habit.name) \(habit.emoji)"
         content.sound = .default
+        content.userInfo = ["habitID": habit.id.uuidString]
 
         let dateComponents = Calendar.current.dateComponents(
             [.hour, .minute],
@@ -60,5 +74,18 @@ final class NotificationManager {
                 print("Notification added successfully. \(habit.name)")
             }
         }
+    }
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse
+    ) async {
+        let userInfo = response.notification.request.content.userInfo
+
+        guard let habitID = userInfo["habitID"] as? String else { return }
+
+        print("Received response for habit with ID: \(habitID)")
+
+        delegate?.notificationManager(self, didReceivedWithID: habitID)
     }
 }

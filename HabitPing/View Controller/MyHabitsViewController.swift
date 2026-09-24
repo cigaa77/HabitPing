@@ -40,6 +40,8 @@ class MyHabitsViewController: UIViewController {
         viewModel.requestNotificationPermission { granted in
             print("Notification permission granted: \(granted)")
         }
+
+        NotificationManager.shared.delegate = self
     }
 
     @objc func addButtonTapped() {
@@ -110,4 +112,31 @@ extension MyHabitsViewController: AddHabitViewControllerDelegate {
         tableView.reloadData()
         updateEmptyState()
     }
+}
+
+extension MyHabitsViewController: NotificationManagerDelegate {
+
+    func notificationManager(
+        _ manager: NotificationManager,
+        didReceivedWithID habitID: String
+    ) {
+
+        guard let habit = viewModel.habit(withID: habitID) else { return }
+        print("\(habit.name) was triggered")
+
+        guard
+            let habitDetailViewController = storyboard?
+                .instantiateViewController(
+                    withIdentifier: "HabitDetailViewController"
+                ) as? HabitDetailViewController
+        else { return }
+
+        habitDetailViewController.habit = habit
+
+        navigationController?.pushViewController(
+            habitDetailViewController,
+            animated: true
+        )
+    }
+
 }

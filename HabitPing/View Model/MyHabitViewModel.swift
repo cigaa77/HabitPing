@@ -18,6 +18,12 @@ final class MyHabitViewModel {
         habits[index]
     }
 
+    func habit(withID id: String) -> Habit? {
+        habits.first {
+            $0.id.uuidString == id
+        }
+    }
+
     init() {
 
         createSampleHabits()

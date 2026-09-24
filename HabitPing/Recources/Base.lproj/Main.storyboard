@@ -141,6 +141,21 @@
             </objects>
             <point key="canvasLocation" x="889.3129770992366" y="100.70422535211269"/>
         </scene>
+        <!--Habit Detail View Controller-->
+        <scene sceneID="W8y-ke-Jkb">
+            <objects>
+                <viewController storyboardIdentifier="HabitDetailViewController" id="S5D-XC-O2e" customClass="HabitDetailViewController" customModule="HabitPing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ela-Sx-z3V">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="aIt-5f-e4k"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="emY-yz-cxN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1526" y="-429"/>
+        </scene>
         <!--Add Habit View Controller-->
         <scene sceneID="2mt-Xa-o0b">
             <objects>
@@ -190,7 +205,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="UKy-HB-YL0">
-                                                <rect key="frame" x="118" y="0.0" width="235" height="50"/>
+                                                <rect key="frame" x="118.33333333333336" y="0.0" width="234.66666666666663" height="50"/>
                                             </datePicker>
                                         </subviews>
                                     </stackView>
@@ -272,7 +287,7 @@
         <image name="bell.fill" catalog="system" width="123" height="128"/>
         <image name="checkmark.circle" catalog="system" width="128" height="123"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
