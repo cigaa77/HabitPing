@@ -37,6 +37,14 @@ final class MyHabitViewModel {
         }
     }
 
+    func removeHabit(at index: Int) {
+        let habit = habits[index]
+        // let habit = habits.remove(at: index)
+
+        NotificationManager.shared.cancelNotification(for: habit)
+        habits.remove(at: index)
+    }
+
     func requestNotificationPermission(completion: @escaping (Bool) -> Void) {
         NotificationManager.shared.requestAuthorization { granted in
             completion(granted)

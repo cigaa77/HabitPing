@@ -88,4 +88,10 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
 
         delegate?.notificationManager(self, didReceivedWithID: habitID)
     }
+
+    func cancelNotification(for habit: Habit) {
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [
+            habit.id.uuidString
+        ])
+    }
 }
